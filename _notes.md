@@ -2,6 +2,21 @@
 # Alkalimah
 
 
+## ncrement tag
+
+```bash
+
+git checkout main
+git pull --prune
+latest_tag=$(git describe --abbrev=0 --tags)
+new_tag=$(echo "$latest_tag" | awk -F'.' -v OFS='.' '{$NF++; print $0}')
+echo Moving tag from ${latest_tag} to ${new_tag}
+
+git tag ${new_tag}
+git push origin --tags
+
+```
+
 ## Generate data
 
 
@@ -181,7 +196,8 @@ audio_blob,
 locations)
 select
 max(location) as location, 
-max(REPLACE(uthmani, '۞ ', '')) as uthmani, 
+--max(REPLACE(uthmani, '۞ ', '')) as uthmani, 
+max(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(uthmani, '۞ ', ''), 'ۙ', ''), 'ۖ', ''), 'ۛ', ''), 'ۚ', '')) as uthmani, 
 simple, 
 max(translation) as translation, 
 max(transliteration) as transliteration, 
