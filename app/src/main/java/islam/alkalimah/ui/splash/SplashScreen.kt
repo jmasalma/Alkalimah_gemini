@@ -18,7 +18,7 @@ fun SplashScreen(onTimeout: () -> Unit) {
         Text("Alkalimah")
     }
     LaunchedEffect(Unit) {
-        delay(2000)
+        delay(1000)
         onTimeout()
     }
 }
