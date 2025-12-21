@@ -10,7 +10,7 @@ class PreferencesManager(private val context: Context) {
     private val Context.dataStore by preferencesDataStore("settings")
 
     val currentCardIndex = context.dataStore.data.map { it[INDEX_KEY] ?: 0 }
-    val advancedLevel = context.dataStore.data.map { it[LEVEL_KEY] ?: 50 }
+    val advancedLevel = context.dataStore.data.map { it[LEVEL_KEY] ?: 10 }
 
     suspend fun saveProgress(index: Int) {
         context.dataStore.edit { it[INDEX_KEY] = index }
@@ -21,7 +21,10 @@ class PreferencesManager(private val context: Context) {
     }
 
     suspend fun reset() {
-        context.dataStore.edit { it[INDEX_KEY] = 0 }
+        context.dataStore.edit {
+            it[INDEX_KEY] = 0
+            it[LEVEL_KEY] = 10
+        }
     }
 
     companion object {

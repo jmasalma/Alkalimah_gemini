@@ -8,6 +8,7 @@ import islam.alkalimah.data.WordDao
 import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -17,12 +18,12 @@ class FlashcardViewModel @Inject constructor(
     private val prefs: PreferencesManager
 ) : ViewModel() {
 
-    val currentLimit = prefs.advancedLevel.stateIn(viewModelScope, SharingStarted.Eagerly, 50)
+    val currentLimit = prefs.advancedLevel.stateIn(viewModelScope, SharingStarted.Eagerly, 10)
     val currentIndex = prefs.currentCardIndex.stateIn(viewModelScope, SharingStarted.Eagerly, 0)
 
     val words = currentLimit.flatMapLatest { limit ->
         dao.getTopWords(limit)
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    }.map { it.shuffled() }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     fun nextCard() {
         viewModelScope.launch {
@@ -32,9 +33,18 @@ class FlashcardViewModel @Inject constructor(
         }
     }
 
+    fun previousCard() {
+        viewModelScope.launch {
+            if (currentIndex.value > 0) {
+                prefs.saveProgress(currentIndex.value - 1)
+            }
+        }
+    }
+
     fun updateLevel(limit: Int) {
         viewModelScope.launch {
             prefs.updateLevel(limit)
+            prefs.saveProgress(0)
         }
     }
 
