@@ -41,6 +41,7 @@ jobs:
         run: ./gradlew assembleRelease
 
       - name: Rename APK
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/alkalimah.apk
 
       - name: Upload Release APK
