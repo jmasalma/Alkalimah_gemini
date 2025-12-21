@@ -46,8 +46,8 @@ fun SettingsScreen(
             Slider(
                 value = currentLimit.toFloat(),
                 onValueChange = { viewModel.updateLevel(it.toInt()) },
-                valueRange = 50f..2000f,
-                steps = 19
+                valueRange = 50f..1000f,
+                steps = 10
             )
 
             Spacer(modifier = Modifier.height(32.dp))
