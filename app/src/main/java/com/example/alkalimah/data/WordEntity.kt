@@ -1,3 +1,9 @@
+package com.example.alkalimah.data
+
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 @Entity(tableName = "words")
 data class WordEntity(
     @PrimaryKey val id: Int,
@@ -7,14 +13,4 @@ data class WordEntity(
     val translation: String?,
     val transliteration: String?,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB) val audio_blob: ByteArray?
-)
-
-// Data class for the aggregated frequency view
-data class WordWithFrequency(
-    val simple: String,
-    val uthmani: String?,
-    val translation: String?,
-    val transliteration: String?,
-    val audio_blob: ByteArray?,
-    val locations: Int
 )

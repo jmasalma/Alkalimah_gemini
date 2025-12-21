@@ -1,6 +1,14 @@
+package com.example.alkalimah.data
+
+import android.content.Context
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.flow.map
+
 class PreferencesManager(private val context: Context) {
     private val Context.dataStore by preferencesDataStore("settings")
-    
+
     val currentCardIndex = context.dataStore.data.map { it[INDEX_KEY] ?: 0 }
     val advancedLevel = context.dataStore.data.map { it[LEVEL_KEY] ?: 50 }
 
