@@ -2,6 +2,7 @@ package islam.alkalimah.ui.flashcard
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -73,34 +74,52 @@ fun FlashcardScreen(viewModel: FlashcardViewModel, audioPlayer: AudioPlayer, onN
                             modifier = Modifier.fillMaxWidth()
                         )
                         Text(
-                            text = word.transliteration ?: "",
-                            fontSize = 32.sp,
-                            fontStyle = FontStyle.Italic
-                        )
-                        Text(
                             text = word.translation ?: "",
                             fontSize = 48.sp,
                             textAlign = TextAlign.Center
                         )
+                        Text(
+                            text = word.transliteration ?: "",
+                            fontSize = 24.sp,
+                            fontStyle = FontStyle.Italic
+                        )
 
-                        IconButton(onClick = { audioPlayer.playAudio(word.audio_blob) }) {
-                            Icon(
-                                Icons.Default.PlayArrow,
-                                contentDescription = "Play",
-                                modifier = Modifier.size(64.dp)
-                            )
+                        Card(
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            IconButton(
+                                onClick = { audioPlayer.playAudio(word.audio_blob) },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Icon(
+                                    Icons.Default.PlayArrow,
+                                    contentDescription = "Play",
+                                    modifier = Modifier.size(64.dp)
+                                )
+                            }
                         }
                     }
                 }
 
-                Button(
-                    onClick = { viewModel.nextCard() },
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 16.dp)
                 ) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowForward, null)
-                    Text("Next", fontSize = 24.sp)
+                    Button(
+                        onClick = { viewModel.previousCard() },
+                        modifier = Modifier.weight(0.25f)
+                    ) {
+                        Text("Prev", fontSize = 24.sp)
+                    }
+                    Button(
+                        onClick = { viewModel.nextCard() },
+                        modifier = Modifier
+                            .weight(0.75f)
+                            .padding(start = 8.dp)
+                    ) {
+                        Text("Next", fontSize = 24.sp)
+                    }
                 }
             }
         }
