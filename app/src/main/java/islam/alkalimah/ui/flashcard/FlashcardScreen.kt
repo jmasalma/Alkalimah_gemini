@@ -99,7 +99,7 @@ fun FlashcardScreen(viewModel: FlashcardViewModel, audioPlayer: AudioPlayer, onN
                         .fillMaxWidth()
                         .padding(top = 16.dp)
                 ) {
-                    Icon(Icons.Default.ArrowForward, null)
+                    Icon(Icons.AutoMirrored.Filled.ArrowForward, null)
                     Text("Next", fontSize = 24.sp)
                 }
             }
