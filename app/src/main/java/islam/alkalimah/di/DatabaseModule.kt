@@ -1,11 +1,11 @@
-package com.example.alkalimah.di
+package islam.alkalimah.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.alkalimah.data.AppDatabase
-import com.example.alkalimah.data.PreferencesManager
-import com.example.alkalimah.data.WordDao
 import dagger.Module
+import islam.alkalimah.data.AppDatabase
+import islam.alkalimah.data.PreferencesManager
+import islam.alkalimah.data.WordDao
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext

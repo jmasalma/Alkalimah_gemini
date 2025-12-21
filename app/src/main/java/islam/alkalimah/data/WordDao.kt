@@ -1,4 +1,4 @@
-package com.example.alkalimah.data
+package islam.alkalimah.data
 
 import androidx.room.Dao
 import androidx.room.Query

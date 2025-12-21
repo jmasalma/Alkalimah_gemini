@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.alkalimah"
+    namespace = "islam.alkalimah"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.alkalimah"
+        applicationId = "islam.alkalimah"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

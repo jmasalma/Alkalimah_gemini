@@ -1,4 +1,4 @@
-package com.example.alkalimah.utils
+package islam.alkalimah.utils
 
 import android.content.Context
 import android.media.MediaPlayer

@@ -1,10 +1,10 @@
-package com.example.alkalimah.ui.flashcard
+package islam.alkalimah.ui.flashcard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.alkalimah.data.PreferencesManager
-import com.example.alkalimah.data.WordDao
 import dagger.hilt.android.lifecycle.HiltViewModel
+import islam.alkalimah.data.PreferencesManager
+import islam.alkalimah.data.WordDao
 import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
