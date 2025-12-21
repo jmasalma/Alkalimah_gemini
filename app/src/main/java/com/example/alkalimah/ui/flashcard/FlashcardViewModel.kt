@@ -1,3 +1,16 @@
+package com.example.alkalimah.ui.flashcard
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.alkalimah.data.PreferencesManager
+import com.example.alkalimah.data.WordDao
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+
 @HiltViewModel
 class FlashcardViewModel @Inject constructor(
     private val dao: WordDao,
@@ -16,6 +29,18 @@ class FlashcardViewModel @Inject constructor(
             if (currentIndex.value < words.value.size - 1) {
                 prefs.saveProgress(currentIndex.value + 1)
             }
+        }
+    }
+
+    fun updateLevel(limit: Int) {
+        viewModelScope.launch {
+            prefs.updateLevel(limit)
+        }
+    }
+
+    fun resetProgress() {
+        viewModelScope.launch {
+            prefs.reset()
         }
     }
 }

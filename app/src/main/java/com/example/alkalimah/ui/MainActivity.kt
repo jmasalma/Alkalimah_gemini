@@ -9,8 +9,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.alkalimah.ui.flashcard.FlashcardScreen
 import com.example.alkalimah.ui.settings.SettingsScreen
-import com.example.alkalimah.util.AudioPlayer
+import com.example.alkalimah.utils.AudioPlayer
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -26,6 +27,7 @@ class MainActivity : ComponentActivity() {
                 NavHost(navController, startDestination = "flashcards") {
                     composable("flashcards") {
                         FlashcardScreen(
+                            viewModel = hiltViewModel(),
                             onNavigateToSettings = { navController.navigate("settings") },
                             audioPlayer = audioPlayer
                         )
