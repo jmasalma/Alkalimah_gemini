@@ -161,6 +161,7 @@ sqlite3 alkalimah_words.db
 ATTACH DATABASE 'alkalimah_words_1k.db' AS target_db;
 
 CREATE TABLE target_db.words (
+id INTEGER PRIMARY KEY AUTOINCREMENT,
 location TEXT,
 uthmani TEXT,
 simple TEXT,
@@ -171,6 +172,13 @@ locations INT
 );
 
 INSERT INTO target_db.words 
+(location,
+uthmani,
+simple,
+translation,
+transliteration,
+audio_blob,
+locations)
 select
 max(location) as location, 
 max(REPLACE(uthmani, '۞ ', '')) as uthmani, 
@@ -179,10 +187,7 @@ max(translation) as translation,
 max(transliteration) as transliteration, 
 max(audio_blob) as audio_blob, 
 count(location) as locations
--- select 
--- simple, count(location) as locations 
 from main.words 
---where simple like '۞ %'
 where length(simple) > 4
 group by simple 
 order by locations desc
