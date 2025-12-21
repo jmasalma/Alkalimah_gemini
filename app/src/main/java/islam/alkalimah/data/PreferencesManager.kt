@@ -1,4 +1,4 @@
-package com.example.alkalimah.data
+package islam.alkalimah.data
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit

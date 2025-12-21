@@ -1,4 +1,4 @@
-package com.example.alkalimah
+package islam.alkalimah
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

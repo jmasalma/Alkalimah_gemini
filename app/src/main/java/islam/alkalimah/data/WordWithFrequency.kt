@@ -1,4 +1,4 @@
-package com.example.alkalimah.data
+package islam.alkalimah.data
 
 data class WordWithFrequency(
     val simple: String,
