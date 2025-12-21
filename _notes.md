@@ -194,20 +194,43 @@ translation,
 transliteration,
 audio_blob,
 locations)
-select
-max(location) as location, 
---max(REPLACE(uthmani, '۞ ', '')) as uthmani, 
-max(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(uthmani, '۞ ', ''), 'ۙ', ''), 'ۖ', ''), 'ۛ', ''), 'ۚ', '')) as uthmani, 
-simple, 
-max(translation) as translation, 
-max(transliteration) as transliteration, 
-max(audio_blob) as audio_blob, 
-count(location) as locations
-from main.words 
-where length(simple) > 4
-group by simple 
-order by locations desc
-limit 1000;
+
+WITH word_counts AS (
+    SELECT 
+        simple, 
+        COUNT(*) AS locations
+    FROM main.words
+    WHERE LENGTH(simple) > 4
+    GROUP BY simple
+    ORDER BY locations DESC
+    LIMIT 1000
+)
+SELECT 
+    w.location,
+    REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(w.uthmani, '۞ ', ''), 'ۙ', ''), 'ۖ', ''), 'ۛ', ''), 'ۚ', '') AS uthmani,
+    w.simple,
+    w.translation,
+    w.transliteration,
+    w.audio_blob,
+    wc.locations
+FROM word_counts wc
+JOIN main.words w ON wc.simple = w.simple
+GROUP BY w.simple
+
+-- select
+-- max(location) as location, 
+-- --max(REPLACE(uthmani, '۞ ', '')) as uthmani, 
+-- max(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(uthmani, '۞ ', ''), 'ۙ', ''), 'ۖ', ''), 'ۛ', ''), 'ۚ', '')) as uthmani, 
+-- simple, 
+-- max(translation) as translation, 
+-- max(transliteration) as transliteration, 
+-- max(audio_blob) as audio_blob, 
+-- count(location) as locations
+-- from main.words 
+-- where length(simple) > 4
+-- group by simple 
+-- order by locations desc
+-- limit 1000;
 ;
 
 DETACH DATABASE target_db;
