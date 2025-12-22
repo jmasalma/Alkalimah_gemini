@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import islam.alkalimah.ui.completion.CompletionScreen
 import islam.alkalimah.ui.flashcard.FlashcardScreen
 import islam.alkalimah.ui.settings.SettingsScreen
 import islam.alkalimah.ui.splash.SplashScreen
@@ -34,32 +33,26 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.padding(innerPadding)
                 ) {
                     composable("splash") {
-                        SplashScreen {
-                            navController.navigate("flashcards") {
-                                popUpTo("splash") { inclusive = true }
-                            }
-                        }
+                        SplashScreen(
+                            onNavigateToFlashcard = { navController.navigate("flashcards") },
+                            onNavigateToSettings = { navController.navigate("settings") }
+                        )
                     }
                     composable("flashcards") {
                         FlashcardScreen(
                             viewModel = hiltViewModel(),
                             onNavigateToSettings = { navController.navigate("settings") },
-                            onNavigateToCompletion = { navController.navigate("completion") },
+                            onNavigateToHub = {
+                                navController.navigate("splash") {
+                                    popUpTo("splash") { inclusive = true }
+                                }
+                            },
                             audioPlayer = audioPlayer
                         )
                     }
                     composable("settings") {
                         SettingsScreen(
                             onBack = { navController.popBackStack() }
-                        )
-                    }
-                    composable("completion") {
-                        CompletionScreen(
-                            onNavigateToSettings = {
-                                navController.navigate("settings") {
-                                    popUpTo("completion") { inclusive = true }
-                                }
-                            }
                         )
                     }
                 }

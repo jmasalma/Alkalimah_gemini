@@ -1,5 +1,8 @@
 package islam.alkalimah.ui.flashcard
 
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,10 +11,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,15 +35,28 @@ import islam.alkalimah.utils.AudioPlayer
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FlashcardScreen(viewModel: FlashcardViewModel, audioPlayer: AudioPlayer, onNavigateToSettings: () -> Unit, onNavigateToCompletion: () -> Unit) {
+fun FlashcardScreen(
+    viewModel: FlashcardViewModel,
+    audioPlayer: AudioPlayer,
+    onNavigateToSettings: () -> Unit,
+    onNavigateToHub: () -> Unit
+) {
     val words by viewModel.words.collectAsState()
     val index by viewModel.currentIndex.collectAsState()
     val showTransliteration by viewModel.showTransliteration.collectAsState()
 
+    BackHandler {
+        onNavigateToHub()
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Alkalimah") },
+                title = {
+                    Text(
+                        "Alkalimah",
+                        modifier = Modifier.clickable { onNavigateToHub() })
+                },
                 actions = {
                     IconButton(onClick = onNavigateToSettings) {
                         Icon(Icons.Default.Settings, contentDescription = "Settings")
@@ -121,7 +135,7 @@ fun FlashcardScreen(viewModel: FlashcardViewModel, audioPlayer: AudioPlayer, onN
                     Button(
                         onClick = {
                             if (index == words.size - 1) {
-                                onNavigateToCompletion()
+                                onNavigateToHub()
                             } else {
                                 viewModel.nextCard()
                             }
@@ -130,7 +144,10 @@ fun FlashcardScreen(viewModel: FlashcardViewModel, audioPlayer: AudioPlayer, onN
                             .weight(0.67f)
                             .padding(start = 8.dp)
                     ) {
-                        Text("Next", fontSize = 24.sp)
+                        Text(
+                            if (index == words.size - 1) "Done" else "Next",
+                            fontSize = 24.sp
+                        )
                     }
                 }
             }
