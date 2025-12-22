@@ -138,7 +138,7 @@ fun FlashcardScreen(
                             .weight(0.67f)
                             .padding(start = 8.dp),
                         colors = if (index == words.size - 1) {
-                            ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                            ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
                         } else {
                             ButtonDefaults.buttonColors()
                         }

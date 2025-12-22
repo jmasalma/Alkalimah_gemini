@@ -2,12 +2,15 @@ package islam.alkalimah.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import islam.alkalimah.ui.flashcard.FlashcardScreen
 import islam.alkalimah.ui.settings.SettingsScreen
@@ -25,6 +28,14 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val navController = rememberNavController()
+            val backStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = backStackEntry?.destination?.route
+
+            if (currentRoute == "splash") {
+                BackHandler {
+                    finish()
+                }
+            }
             
             Scaffold { innerPadding ->
                 NavHost(
