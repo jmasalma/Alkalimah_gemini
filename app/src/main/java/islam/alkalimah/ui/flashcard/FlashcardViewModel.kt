@@ -20,6 +20,7 @@ class FlashcardViewModel @Inject constructor(
 
     val currentLimit = prefs.advancedLevel.stateIn(viewModelScope, SharingStarted.Eagerly, 10)
     val currentIndex = prefs.currentCardIndex.stateIn(viewModelScope, SharingStarted.Eagerly, 0)
+    val showTransliteration = prefs.showTransliteration.stateIn(viewModelScope, SharingStarted.Eagerly, true)
 
     val words = currentLimit.flatMapLatest { limit ->
         dao.getTopWords(limit)
@@ -45,6 +46,12 @@ class FlashcardViewModel @Inject constructor(
         viewModelScope.launch {
             prefs.updateLevel(limit)
             prefs.saveProgress(0)
+        }
+    }
+
+    fun toggleTransliteration(show: Boolean) {
+        viewModelScope.launch {
+            prefs.toggleTransliteration(show)
         }
     }
 

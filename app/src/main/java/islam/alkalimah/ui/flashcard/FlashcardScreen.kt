@@ -37,6 +37,7 @@ import islam.alkalimah.utils.AudioPlayer
 fun FlashcardScreen(viewModel: FlashcardViewModel, audioPlayer: AudioPlayer, onNavigateToSettings: () -> Unit, onNavigateToCompletion: () -> Unit) {
     val words by viewModel.words.collectAsState()
     val index by viewModel.currentIndex.collectAsState()
+    val showTransliteration by viewModel.showTransliteration.collectAsState()
 
     Scaffold(
         topBar = {
@@ -80,11 +81,13 @@ fun FlashcardScreen(viewModel: FlashcardViewModel, audioPlayer: AudioPlayer, onN
                             fontSize = 48.sp,
                             textAlign = TextAlign.Center
                         )
-                        Text(
-                            text = word.transliteration ?: "",
-                            fontSize = 24.sp,
-                            fontStyle = FontStyle.Italic
-                        )
+                        if (showTransliteration) {
+                            Text(
+                                text = word.transliteration ?: "",
+                                fontSize = 24.sp,
+                                fontStyle = FontStyle.Italic
+                            )
+                        }
 
                         Card(
                             modifier = Modifier.fillMaxWidth(),

@@ -1,6 +1,7 @@
 package islam.alkalimah.data
 
 import android.content.Context
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -11,6 +12,7 @@ class PreferencesManager(private val context: Context) {
 
     val currentCardIndex = context.dataStore.data.map { it[INDEX_KEY] ?: 0 }
     val advancedLevel = context.dataStore.data.map { it[LEVEL_KEY] ?: 10 }
+    val showTransliteration = context.dataStore.data.map { it[TRANSLITERATION_KEY] ?: true }
 
     suspend fun saveProgress(index: Int) {
         context.dataStore.edit { it[INDEX_KEY] = index }
@@ -18,6 +20,10 @@ class PreferencesManager(private val context: Context) {
 
     suspend fun updateLevel(limit: Int) {
         context.dataStore.edit { it[LEVEL_KEY] = limit }
+    }
+
+    suspend fun toggleTransliteration(show: Boolean) {
+        context.dataStore.edit { it[TRANSLITERATION_KEY] = show }
     }
 
     suspend fun reset() {
@@ -30,5 +36,6 @@ class PreferencesManager(private val context: Context) {
     companion object {
         val INDEX_KEY = intPreferencesKey("card_index")
         val LEVEL_KEY = intPreferencesKey("advanced_limit")
+        val TRANSLITERATION_KEY = booleanPreferencesKey("show_transliteration")
     }
 }

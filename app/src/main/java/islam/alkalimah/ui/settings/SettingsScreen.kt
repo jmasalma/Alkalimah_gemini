@@ -17,6 +17,7 @@ fun SettingsScreen(
     viewModel: FlashcardViewModel = hiltViewModel()
 ) {
     val currentLimit by viewModel.currentLimit.collectAsState()
+    val showTransliteration by viewModel.showTransliteration.collectAsState()
     val scope = rememberCoroutineScope()
 
     Scaffold(
@@ -49,6 +50,20 @@ fun SettingsScreen(
                 valueRange = 10f..1000f,
                 steps = 99
             )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+            ) {
+                Text(text = "Show Transliteration", style = MaterialTheme.typography.titleMedium)
+                Switch(
+                    checked = showTransliteration,
+                    onCheckedChange = { viewModel.toggleTransliteration(it) }
+                )
+            }
 
             Spacer(modifier = Modifier.height(32.dp))
 
