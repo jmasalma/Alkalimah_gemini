@@ -57,6 +57,11 @@ class AlkalimahApp {
                 throw new Error('No words found in the database');
             }
             
+            // Apply randomization if enabled
+            if (this.settings.randomOrder) {
+                this.shuffleWords();
+            }
+            
             console.log(`Loaded ${this.words.length} words`);
         } catch (error) {
             console.error('Error loading words:', error);
@@ -79,9 +84,11 @@ class AlkalimahApp {
         // Set up settings toggles
         const transliterationToggle = document.getElementById('transliteration-toggle');
         const autoPlayToggle = document.getElementById('auto-play-toggle');
+        const randomOrderToggle = document.getElementById('random-order-toggle');
         
         transliterationToggle.checked = this.settings.showTransliteration;
         autoPlayToggle.checked = this.settings.autoPlay;
+        randomOrderToggle.checked = this.settings.randomOrder;
         
         // Update transliteration visibility
         this.updateTransliterationVisibility();
@@ -105,6 +112,22 @@ class AlkalimahApp {
         document.getElementById('auto-play-toggle').addEventListener('change', (e) => {
             this.settings.autoPlay = e.target.checked;
             this.saveSettings();
+        });
+        document.getElementById('random-order-toggle').addEventListener('change', (e) => {
+            this.settings.randomOrder = e.target.checked;
+            this.saveSettings();
+            
+            // Apply or remove randomization immediately
+            if (e.target.checked) {
+                this.shuffleWords();
+            } else {
+                // Restore original order by reloading
+                this.loadWords();
+            }
+            
+            // Reset to first word
+            this.currentIndex = 0;
+            this.displayCurrentWord();
         });
         
         // Keyboard navigation
@@ -349,6 +372,14 @@ class AlkalimahApp {
                 this.currentIndex = index;
                 this.displayCurrentWord();
             });
+        }
+    }
+
+    // Method to shuffle words array
+    shuffleWords() {
+        for (let i = this.words.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [this.words[i], this.words[j]] = [this.words[j], this.words[i]];
         }
     }
 
