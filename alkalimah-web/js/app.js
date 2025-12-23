@@ -10,7 +10,7 @@ class AlkalimahApp {
         this.settings = {
             showTransliteration: false,
             autoPlay: false,
-            randomOrder: false
+            randomOrder: true
         };
         this.audioContext = null;
         this.currentAudio = null;
