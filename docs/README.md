@@ -83,8 +83,8 @@ This application is designed to work seamlessly with GitHub Pages:
 
 1. Enable GitHub Pages in your repository settings
 2. Set source to "Deploy from a branch"
-3. Select the main branch and `/alkalimah-web` folder
-4. Your app will be available at: `https://[username].github.io/[repository]/alkalimah-web/`
+3. Select the main branch and `/docs` folder
+4. Your app will be available at: `https://[username].github.io/[repository]/`
 
 ## Browser Compatibility
 
@@ -148,12 +148,11 @@ This project maintains the same license as the original Alkalimah Android applic
 ## Acknowledgments
 
 - **Original App**: Based on the Alkalimah Android application
-- **Data Source**: Quran.com API for word data and audio
 - **Fonts**: Amiri (Arabic) and Inter (Latin) from Google Fonts
 - **Icons**: Material Design icons
 
 ---
 
-**Live Demo**: [View the application](https://your-username.github.io/Alkalimah/alkalimah-web/)
+**Live Demo**: [View the application](https://jmasalma.github.io/Alkalimah/)
 
 For questions or support, please open an issue in the repository.
